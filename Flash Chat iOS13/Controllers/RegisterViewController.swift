@@ -25,9 +25,16 @@ class RegisterViewController: UIViewController {
                 }
                 else {
                     // Navigate to the ChatView
-                    self.performSegue(withIdentifier: "RegisterToChat", sender: self)
+                    self.performSegue(withIdentifier: K.registerSegue, sender: self)
                 }
             }
+        }
+        else {
+            let alertController = UIAlertController(title: "Invalid Register", message: "You cannot leave empty fields. Please provide an input.", preferredStyle: .alert)
+            let OkAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+            alertController.addAction(OkAction)
+            self.present(alertController, animated: true, completion: nil)
+            
         }
         
     }

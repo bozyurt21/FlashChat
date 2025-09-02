@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
 
@@ -15,6 +16,27 @@ class LoginViewController: UIViewController {
     
 
     @IBAction func loginPressed(_ sender: UIButton) {
+        if let email = emailTextfield.text, let password = passwordTextfield.text {
+            Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                if let e = error {
+                    let alertController = UIAlertController(title: "Invalid Login", message: e.localizedDescription, preferredStyle: .alert)
+                    let OkAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                    alertController.addAction(OkAction)
+                    self.present(alertController, animated: true, completion: nil)
+                }
+                else {
+                    self.performSegue(withIdentifier: K.loginSegue, sender: self)
+                    
+                }
+            }
+        }
+        else {
+            let alertController = UIAlertController(title: "Invalid Login", message: "You cannot leave empty fields. Please provide an input.", preferredStyle: .alert)
+            let OkAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+            alertController.addAction(OkAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
     }
     
 }
